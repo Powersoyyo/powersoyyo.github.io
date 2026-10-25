@@ -17,7 +17,7 @@
 <meta property="og:url" content="https://www.tudominio.com/">
 <meta property="og:image" content="https://www.tudominio.com/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX">
+<meta name="google-adsense-account" content="ca-pub-8386275154214431">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -236,18 +236,19 @@ footer p{max-width:60em;margin:0 0 8px}
 
 /* ===== Configuración de AdSense ===== */
 var ADS = {
-  client: "ca-pub-XXXXXXXXXXXXXXXX",
+  client: "ca-pub-8386275154214431",
   slots: { top: "0000000000", feed: "0000000000", side: "0000000000" }
 };
 function getConsent(){ try { return localStorage.getItem("cookies"); } catch(e){ return null; } }
 function setConsent(v){ try { localStorage.setItem("cookies", v); } catch(e){} }
 function loadAds(){
-  if (ADS.client.indexOf("X") !== -1) return;
+  if (!/^ca-pub-\d+$/.test(ADS.client)) return;
   var s = document.createElement("script");
   s.async = true; s.crossOrigin = "anonymous";
   s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + ADS.client;
   document.head.appendChild(s);
   document.querySelectorAll(".ad").forEach(function(el){
+    if (ADS.slots[el.dataset.ad] === "0000000000") return;   // bloque aún sin crear en AdSense
     var box = el.querySelector(".ad-box"), ins = document.createElement("ins");
     ins.className = "adsbygoogle"; ins.style.display = "block";
     ins.setAttribute("data-ad-client", ADS.client);
