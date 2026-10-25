@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Herramientas financieras gratuitas | Numia</title><meta name="description" content="Simulador de ahorro con interés compuesto: calcula cuánto podrías acumular."><meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://powersoyyo.github.io/herramientas/"><meta property="og:type" content="website"><meta property="og:title" content="Herramientas financieras gratuitas"><meta property="og:description" content="Simulador de ahorro con interés compuesto: calcula cuánto podrías acumular."><meta property="og:url" content="https://powersoyyo.github.io/herramientas/">
+<meta name="google-adsense-account" content="ca-pub-8386275154214431"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/style.css"></head><body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header>
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="Numia, inicio">Numia<i></i></a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="/ahorro/">Ahorro</a></li>
+        <li><a href="/inversion/">Inversión</a></li>
+        <li><a href="/hipotecas/">Hipotecas</a></li>
+        <li><a href="/tarjetas/">Tarjetas</a></li>
+        <li><a href="/herramientas/">Herramientas</a></li>
+      </ul>
+    </nav>
+  </div>
+</header><main id="contenido" class="wrap page"><p class="crumbs"><a href="/">Inicio</a> › Herramientas</p><h1>Herramientas financieras gratuitas</h1><p>Calcula cuánto podrías acumular si ahorras de forma constante. Introduce tu ahorro inicial, la aportación mensual, los años y una rentabilidad anual estimada.</p><div class="sim" role="region" aria-labelledby="sim-t">
+      <h2 id="sim-t">Simulador de ahorro</h2>
+      <div class="fields">
+        <label>Ahorro inicial (€)<input id="i0" type="number" min="0" value="1000" inputmode="decimal"></label>
+        <label>Aportación mensual (€)<input id="i1" type="number" min="0" value="200" inputmode="decimal"></label>
+        <label>Años<input id="i2" type="number" min="1" max="50" value="15" inputmode="numeric"></label>
+        <label>Rentabilidad anual (%)<input id="i3" type="number" min="0" max="20" step="0.1" value="4" inputmode="decimal"></label>
+      </div>
+      <p class="out" id="total" aria-live="polite">0 €</p>
+      <p class="sub" id="detail"></p>
+      <svg viewBox="0 0 400 130" role="img" aria-label="Evolución del capital en el tiempo">
+        <path id="p-in" fill="none" stroke="#5B6678" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <path id="p-tot" fill="none" stroke="#0057FF" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <p class="note">Simulación orientativa con interés compuesto mensual. No garantiza rentabilidades futuras.</p>
+    </div><h2>Cómo usarlo</h2>
+<p>Prueba varias rentabilidades para ver el rango de resultados: la rentabilidad real no es fija ni está garantizada. Verás que el tiempo y la constancia de las aportaciones pesan tanto como el porcentaje.</p><div class="ad" data-ad="feed"><span class="ad-label">Publicidad</span><div class="ad-box"></div></div></main><footer>
+  <div class="wrap">
+    <ul>
+      <li><a href="/sobre-nosotros/">Quiénes somos</a></li>
+      <li><a href="/metodologia-editorial/">Metodología editorial</a></li>
+      <li><a href="/aviso-legal/">Aviso legal</a></li>
+      <li><a href="/privacidad/">Política de privacidad</a></li>
+      <li><a href="/cookies/">Política de cookies</a></li>
+      <li><a href="/contacto/">Contacto</a></li>
+      <li><a href="#" id="cookie-settings">Configurar cookies</a></li>
+    </ul>
+    <p>Aviso: el contenido de Numia es informativo y no constituye asesoramiento financiero personalizado. Invertir conlleva riesgo de pérdida de capital. Consulta con un profesional antes de tomar decisiones.</p>
+    <p>© 2026 Numia. Todos los derechos reservados.</p>
+  </div>
+</footer><div id="cookies" role="dialog" aria-label="Aviso de cookies" hidden>
+  Usamos cookies propias y de terceros (Google AdSense) para mostrar publicidad y medir el uso del sitio. Puedes aceptarlas o rechazarlas; más información en la <a href="/cookies/">política de cookies</a>.
+  <div><button class="ok" id="c-ok">Aceptar</button><button id="c-no">Rechazar</button></div>
+</div><script>(function(){
+  var f = new Intl.NumberFormat("es-ES",{style:"currency",currency:"EUR",maximumFractionDigits:0});
+  function v(id){ return Math.max(0, parseFloat(document.getElementById(id).value) || 0); }
+  function path(a){
+    var max = Math.max.apply(null, a) || 1;
+    return a.map(function(y,i){ return (i?"L":"M") + (i*400/(a.length-1)).toFixed(1) + " " + (125-(y/max)*115).toFixed(1); }).join(" ");
+  }
+  function calc(){
+    var b = v("i0"), m = v("i1"), yrs = Math.max(1, Math.min(50, Math.round(v("i2")))), r = v("i3")/100/12;
+    var tot = [b], inv = [b], put = b;
+    for (var y = 1; y <= yrs; y++){
+      for (var k = 0; k < 12; k++){ b = b*(1+r) + m; put += m; }
+      tot.push(b); inv.push(put);
+    }
+    document.getElementById("total").textContent = f.format(b);
+    document.getElementById("detail").textContent = "Aportado: " + f.format(put) + " · Intereses: " + f.format(b-put);
+    document.getElementById("p-tot").setAttribute("d", path(tot));
+    document.getElementById("p-in").setAttribute("d", path(inv).replace(/(\d+\.\d) (\d+\.\d)/g, function(s,x,y){ return x+" "+y; }));
+  }
+  ["i0","i1","i2","i3"].forEach(function(id){ document.getElementById(id).addEventListener("input", calc); });
+  calc();
+})();</script><script src="/assets/site.js"></script></body></html>
