@@ -65,3 +65,6 @@ footer p{max-width:60em;margin:0 0 8px}
 .page li{margin-bottom:6px}.crumbs{font-size:.85rem;color:var(--steel);margin:0 0 14px}.crumbs a{text-decoration:none}
 .byline{font-size:.9rem;font-weight:600;color:var(--ion);margin:0 0 20px}.lead2{font-size:1.15rem;color:var(--steel)}
 .page .sim{margin:24px 0}
+.tblw{overflow-x:auto}.tbl{width:100%;border-collapse:collapse;font-size:.95rem;margin:12px 0}.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}.tbl th{font-weight:600;background:#fff}
+.page dt{font-weight:600;margin-top:18px}.page dd{margin:4px 0 0;color:var(--steel);max-width:42em}
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:14px 0 6px}.bar span{display:block;height:100%}.note2{font-size:.9rem;color:var(--steel)}
